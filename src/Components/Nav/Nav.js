@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import styled, { css } from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import styled, { css } from "styled-components";
+import { NavLink } from "react-router-dom";
 
 const Nav = (props) => {
   const { Kakao } = window;
-  const [myProfileURL, setMyProfileURL] = useState('');
-  const [myProfileName, setMyProfileName] = useState('');
+  const [myProfileURL, setMyProfileURL] = useState("");
+  const [myProfileName, setMyProfileName] = useState("");
   const [handleModalSwitch, setHandleModalSwitch] = useState(false);
   const [loginStatueSwitch, setLoginStatueSwitch] = useState(false);
 
   useEffect(() => {
-    setMyProfileURL(props.history.location.state.profileImage);
-    setMyProfileName(props.history.location.state.name);
+    // setMyProfileURL(props.history.location.state.profileImage);
+    // setMyProfileName(props.history.location.state.name);
     setLoginStatueSwitch(!loginStatueSwitch);
   }, []);
 
   function KakaoLogout() {
     if (Kakao.Auth.getAccessToken()) {
       Kakao.Auth.logout();
-      localStorage.removeItem('access_token');
+      localStorage.removeItem("access_token");
     }
   }
 
@@ -27,54 +27,55 @@ const Nav = (props) => {
       <NavContainer>
         <NavLeftBox>
           <LogoBox>
-            <img src='/images/SH/logo_text.png' alt='logo' />
+            <img src="/images/SH/logo_text.png" alt="logo" />
           </LogoBox>
           <SerchBox>
-            <input type='text' placeholder='배우고 싶은 것이 있나요?' />
-            <img src='/images/SH/serchIcon.png' alt='SerchIcon' />
+            <input type="text" placeholder="배우고 싶은 것이 있나요?" />
+            <img src="/images/SH/serchIcon.png" alt="SerchIcon" />
           </SerchBox>
         </NavLeftBox>
         {loginStatueSwitch ? (
           <NavRightBox>
             <MenuBox>
-              <NavLink to={'/creator'}>
+              <NavLink to={"/creator"}>
                 <MenuList>크리에이터 센터</MenuList>
               </NavLink>
               <MenuList>주문 및 배송</MenuList>
               <MenuList>내 쿠폰</MenuList>
-              <MenuList color='#ff922b'>내 클래스</MenuList>
+              <MenuList color="#ff922b">내 클래스</MenuList>
             </MenuBox>
             <ProfileBox>
               <ProfileImageBox>
-                <img src={myProfileURL} alt='myProfile' />
+                <img src={myProfileURL} alt="myProfile" />
               </ProfileImageBox>
               <ProfileArrow>
                 <img
-                  src='/images/SH/showIcon.png'
-                  alt='showIcon'
+                  src="/images/SH/showIcon.png"
+                  alt="showIcon"
                   onClick={() => setHandleModalSwitch(!handleModalSwitch)}
                 />
               </ProfileArrow>
               {handleModalSwitch === true ? (
                 <ProfileModalBox>
-                  <div className='miniProfileBox'>
-                    <div className='miniProfileImageBox'>
-                      <img src={myProfileURL} alt='miniMyProfile' />
+                  <div className="miniProfileBox">
+                    <div className="miniProfileImageBox">
+                      <img src={myProfileURL} alt="miniMyProfile" />
                     </div>
-                    <div className='profileInfo'>
-                      <div className='profileName'>{myProfileName}</div>
-                      <NavLink className='myPage' to={'/MyPage'}>
-                        {'마이페이지 >'}
+                    <div className="profileInfo">
+                      <div className="profileName">{myProfileName}</div>
+                      <NavLink className="myPage" to={"/MyPage"}>
+                        {"마이페이지 >"}
                       </NavLink>
                     </div>
                   </div>
                   <div
-                    className='logOutBox'
+                    className="logOutBox"
                     onClick={(e) => {
                       setLoginStatueSwitch(!loginStatueSwitch);
                       setHandleModalSwitch(false);
                       KakaoLogout(e);
-                    }}>
+                    }}
+                  >
                     로그아웃
                   </div>
                 </ProfileModalBox>
@@ -85,7 +86,7 @@ const Nav = (props) => {
           <NavRightBox>
             <MenuBox>
               <MenuList>크리에이터 지원</MenuList>
-              <NavLink to={'/login'}>
+              <NavLink to={"/login"}>
                 <MenuList>
                   {/* onClick={() => setLoginStatueSwitch(!loginStatueSwitch)} */}
                   로그인
