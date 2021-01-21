@@ -58,8 +58,19 @@ Back-end <a href='https://github.com/wecode-bootcamp-korea/14-2nd-CLNASS101-back
 #### 완성한 미션
  - [x] Common : CRA구축, Router 초기세팅
  - [x] Layout, CSS : 메인페이지, 상품 디테일 페이지
- - [x] Fuction : 동적 라우팅 구현
 
+#### MainPage
+ - [x] Function : React Slick 이용하여 광고페이지 구현
+ - [x] Function : 각 클래스 마다 하트를 누를시, 좋아요 갯수 변경되게 구현
+ - [x] Function : 동적 routing 이용하여 페이지 클릭시 고유한 디테일 페이지로 이동
+
+#### DetailPage
+ - [x] Function : subNav 항목 클릭시, 선택하는 곳으로 이동하도록 구현
+ - [x] Function : 하트를 누를시, 좋아요 갯수 변경되게 구현
+ - [x] Function : 커뮤니티에 글 작성할 수 있도록 구현
+ - [x] Function : 커뮤니티 글 작성할 모달 창 구현 
+ - [x] Function : 댓글 기능 구현
+ 
 ### 안혜수
 
 #### 완성한 미션
