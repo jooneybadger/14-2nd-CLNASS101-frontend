@@ -1,42 +1,36 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { API_WC } from "../../../config";
 
-class CreativeContent extends Component {
-  constructor() {
-    super();
-    this.state = {
-      creativeArr: [],
-    };
-  }
+const CreativeContent = () => {
+  const [creativeArr, setCreativeArr] = useState([]);
 
-  componentDidMount() {
-    fetch(API_WC)
+  useEffect(() => {
+    fetch(API_WC, {
+      method: "GET",
+    })
       .then((res) => res.json())
-      .then((res) => this.setState({ creativeArr: res.CreativeContent }));
-  }
+      .then((res) => setCreativeArr(res.CreativeContent));
+  }, []);
 
-  render() {
-    const { creativeArr } = this.state;
-    return (
-      <Creative>
-        <div className="wrapSubHeader">
-          <h2>크리에이티브</h2>
-          <i class="fa fa-caret-right" />
-        </div>
-        <div className="contents">
-          {creativeArr.map((content) => {
-            return (
-              <div key={content.id} className="content">
-                {content.content}
-              </div>
-            );
-          })}
-        </div>
-      </Creative>
-    );
-  }
-}
+  return (
+    <Creative>
+      <div className="wrapSubHeader">
+        <h2>크리에이티브</h2>
+        <i class="fa fa-caret-right" />
+      </div>
+      <div className="contents">
+        {creativeArr.map((content) => {
+          return (
+            <div key={content.id} className="content">
+              {content.content}
+            </div>
+          );
+        })}
+      </div>
+    </Creative>
+  );
+};
 
 export default CreativeContent;
 

@@ -1,45 +1,48 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component, useState, useEffect } from "react";
 import styled from "styled-components";
-import { API_DETAILPAGE } from "../../../config";
+import { API_YJ_DETAIL } from "../../../config";
 
 const KitIntroduce = () => {
-  const [kit, setKit] = useState([]);
+  const [kit, setKit] = useState();
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    fetch(API_DETAILPAGE)
+    fetch(API_YJ_DETAIL)
       .then((res) => res.json())
-      .then((res) => setKit(res.CLASS.kitInfo));
+      .then((res) => {
+        setKit(res.class.KitIntroduce);
+        setList(res.class.KitIntroduce.KitLists);
+      });
   }, []);
 
   console.log(kit);
+
   return (
     <>
       <WrapKitIntroduce>
         <Header>
-          <h1>키트 소개</h1>
+          <h1>
+            <a name="kitIntroduce">키트 소개</a>
+          </h1>
           <p>🌠 오토 크리에이터가 세심하게 준비한 키트 구성을 살펴보세요.</p>
         </Header>
         <AllInOne>
-          {/* <h3>{kit.subHeader}</h3> */}
-          {kit.length > 0 &&
-            kit.map((kit) => {
-              return (
-                <>
-                  <img src={kit.mainImageUrl} alt="1" />
-                  <h3>{kit.kitName}</h3>
-                </>
-              );
-            })}
-
-          {/* <p>{kit.allInOneText}</p> */}
+          <h3>{kit && kit.subHeader}</h3>
+          <>
+            <img src={kit && kit.imageUrl} alt={kit && kit.imageAlt} />
+            <h3>{kit && kit.subHeader}</h3>
+          </>
+          <p>{kit && kit.allInOneText}</p>
           <AllInOneText>
-            {list.map((list) => {
-              // return <li>{list.list}</li>;
-            })}
+            {list &&
+              list.map((list) => {
+                return <li>{list.list}</li>;
+              })}
           </AllInOneText>
-          <AllInOneInfo>{/* <p>{kit.allInOneInfo}</p> */}</AllInOneInfo>
+          <AllInOneInfo>
+            <p>{kit && kit.allInOneInfo}</p>
+          </AllInOneInfo>
         </AllInOne>
       </WrapKitIntroduce>
     </>
@@ -57,7 +60,7 @@ const Header = styled.header`
   margin-top: 48px;
   h1 {
     margin-bottom: 60px;
-    font-size: 20px;
+    font-size: 25px;
     font-weight: bold;
     line-height: 28px;
   }

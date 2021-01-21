@@ -1,60 +1,62 @@
-/* eslint-disable no-useless-constructor */
-/* eslint-disable jsx-a11y/alt-text */
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import Bookmark from "./Bookmark";
 
-class Lists extends Component {
-  constructor() {
-    super();
-  }
+const Lists = (props) => {
+  const list = props.list;
+  const [likes, setLikes] = useState(false);
+  const [likesNum, setLikesNum] = useState(0);
 
-  goToDetail = () => {
-    this.props.history.push(`/ProductDetail/${this.props.list.id}`);
+  useEffect(() => {
+    setLikesNum(list.likes);
+  }, []);
+
+  console.log(likesNum);
+
+  const handleChangeHeart = () => {
+    setLikes(!likes);
+    likes ? setLikesNum(likesNum - 1) : setLikesNum(likesNum + 1);
   };
 
-  render() {
-    const { list } = this.props;
+  const goToDetail = () => {
+    props.history.push(`/ProductDetail/${list.id}`);
+  };
 
-    return (
-      <WrapList>
-        <ListInfo>
-          <ProductImages>
-            <img
-              className="mainImage"
-              src={list.thumbnail}
-              alt="mainImage"
-              onClick={this.goToDetail}
-            />
-            <Bookmark />
-          </ProductImages>
-          <Intro>
-            <div className="category">
-              {list.subCategory}•{list.creator}
-            </div>
-            <div className="title">{list.title}</div>
-            <div className="likes">
-              <i class="fa fa-heart" />
-              <span>{list.likeCount}</span>
-            </div>
-          </Intro>
-          <Discount>
-            <span className="originalPrice">{list.price}원</span>
-            <span className="discountPer">{list.sale * 100}%</span>
-          </Discount>
-          <Price>
-            <span className="monthlyPay">{list.finalPrice}원</span>
-          </Price>
-          <State>
-            <span className="present">선물하기</span>
-            <span className="attendTerm">즉시 수강 가능</span>
-          </State>
-        </ListInfo>
-      </WrapList>
-    );
-  }
-}
+  const finalPrice = (list.Price * (100 - list.discountPer)) / 100;
+
+  return (
+    <WrapList>
+      <ListInfo>
+        <ProductImages>
+          <img className="mainImage" src={list.imageUrl} alt="mainImage" onClick={goToDetail} />
+          <Bookmark likes={likes} handleChangeHeart={handleChangeHeart} />
+        </ProductImages>
+        <Intro>
+          <div className="category">
+            {list.category}•{list.creator}
+          </div>
+          <div className="title">{list.title}</div>
+          <Likes>
+            <i className="fa fa-heart" />
+            <span className="likesNum">{likesNum}</span>
+          </Likes>
+        </Intro>
+        <Discount>
+          <span className="originalPrice">{list.Price}원</span>
+          <span className="discountPer">{list.discountPer}%</span>
+        </Discount>
+        <Price>
+          <span className="monthlyPay">{finalPrice}원</span>
+        </Price>
+        <State>
+          <span className="present">{list.present}</span>
+          <span className="attendTerm">{list.availableTerm}</span>
+        </State>
+      </ListInfo>
+    </WrapList>
+  );
+};
 
 export default withRouter(Lists);
 
@@ -129,7 +131,9 @@ const Intro = styled.div`
       cursor: pointer;
     }
   }
-  .likes {
+`;
+
+const Likes = styled.div`
     display: flex;
     margin: 0px 8px 0px 0px;
     font-size: 11px;
@@ -138,7 +142,7 @@ const Intro = styled.div`
     letter-spacing: normal;
     border-bottom: 1px solid lightgrey;
     padding-bottom: 10px;
-
+    
     i {
       margin-right: 2px;
       color: rgb(133, 138, 141);

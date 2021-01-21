@@ -1,15 +1,20 @@
 import React, { Component, useEffect, useState } from "react";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
-import { API_DETAILPAGE } from "../../../config";
+import { API_YJ_DETAIL } from "../../../config";
 
 const OrderPage = (props) => {
-  console.log(props);
   const [data, setData] = useState([]);
+  const [likes, setLikes] = useState(false);
+  const [likesNum, setLikesNum] = useState(0);
+
   useEffect(() => {
-    fetch(API_DETAILPAGE)
+    fetch(API_YJ_DETAIL)
       .then((res) => res.json())
-      .then((res) => setData(res.CLASS));
+      .then((res) => {
+        setData(res.class.OrderPage);
+        setLikesNum(res.class.OrderPage.likeCount);
+      });
   }, []);
 
   const applyClass = () => {
@@ -31,6 +36,13 @@ const OrderPage = (props) => {
       .then((res) => res.json())
       .then((res) => console.log(res));
   };
+
+  const changeLikes = () => {
+    setLikes(!likes);
+    data && likes ? setLikesNum(likesNum - 1) : setLikesNum(likesNum + 1);
+    console.log(likesNum);
+  };
+
   return (
     <WrapContainer>
       <WrapBox>
@@ -49,20 +61,20 @@ const OrderPage = (props) => {
                 <FiveMonth>금액</FiveMonth>
                 <MonthlyPay>
                   <DiscountPer>{data.sale}%</DiscountPer>
-                  <SumAmount>{data.price}</SumAmount>
+                  <SumAmount>{(data.price * (100 - data.sale)) / 100}원</SumAmount>
                 </MonthlyPay>
               </InstallmentDetail>
             </Installment>
             <TotalDiscount>
               <DiscountText>총 할인액</DiscountText>
-              <DiscountNum>-{data.sale}원</DiscountNum>
+              <DiscountNum>-{(data.price * data.sale) / 100}원</DiscountNum>
             </TotalDiscount>
             <EarlyBird>
               <EarlyBirdButton>얼리버드 쿠폰 받기</EarlyBirdButton>
             </EarlyBird>
             <ProvideThings>
               <ProvideContents>
-                <sapn>콘텐츠 이용권</sapn>
+                <span>콘텐츠 이용권</span>
               </ProvideContents>
               <ProvideKits>
                 <span>준비물 키트</span>
@@ -73,9 +85,9 @@ const OrderPage = (props) => {
             </ProvideThings>
             <Buttons>
               <TopButtons>
-                <LikeButton>
+                <LikeButton likesOnOff={likes} onClick={changeLikes}>
                   <i class="fa fa-heart" aria-hidden="true"></i>
-                  <span>{data.likeCount}</span>
+                  <span>{likesNum}</span>
                 </LikeButton>
                 <ShareButton>
                   <i class="fa fa-share" aria-hidden="true"></i>
@@ -147,14 +159,10 @@ const HeaderTerm = styled.div`
 `;
 
 const Term = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
   font-size: 11px;
   color: rgb(133, 138, 141);
   line-height: 16px;
   letter-spacing: normal;
-  background-color: rgba(0, 0, 0, 0.1);
 `;
 
 const SaleProductInfoTable = styled.div`
@@ -282,7 +290,7 @@ const ProvideThings = styled.div`
   border-bottom: 1px solid rgba(100, 100, 100, 0.1);
   color: rgb(27, 28, 29);
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 700;
   line-height: 20px;
   letter-spacing: -0.15px;
 `;
@@ -327,14 +335,16 @@ const LikeButton = styled.button`
   }
 
   i {
-    margin-right: 5px;
-    color: red;
+    color: ${(props) => (props.likesOnOff ? "red" : "white")};
+    font-size: 17px;
+    margin-right: 10px;
   }
 `;
 
 const ShareButton = styled.button`
   width: 153px;
   height: 40px;
+  margin-left: 10px;
   background-color: rgb(221, 221, 225);
   border-radius: 5px;
   outline-style: none;

@@ -1,42 +1,36 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { API_WC } from "../../../config";
 
-class CareerContent extends Component {
-  constructor() {
-    super();
-    this.state = {
-      careerArr: [],
-    };
-  }
+const CareerContent = () => {
+  const [careerArr, setCareerArr] = useState([]);
 
-  componentDidMount() {
-    fetch(API_WC)
+  useEffect(() => {
+    fetch(API_WC, {
+      method: "GET",
+    })
       .then((res) => res.json())
-      .then((res) => this.setState({ careerArr: res.CareerContent }));
-  }
+      .then((res) => setCareerArr(res.CareerContent));
+  }, []);
 
-  render() {
-    const { careerArr } = this.state;
-    return (
-      <Career>
-        <div className="wrapSubHeader">
-          <h2>커리어</h2>
-          <i class="fa fa-caret-right" />
-        </div>
-        <div className="contents">
-          {careerArr.map((content) => {
-            return (
-              <div key={content.id} className="content">
-                {content.content}
-              </div>
-            );
-          })}
-        </div>
-      </Career>
-    );
-  }
-}
+  return (
+    <Career>
+      <div className="wrapSubHeader">
+        <h2>커리어</h2>
+        <i class="fa fa-caret-right" />
+      </div>
+      <div className="contents">
+        {careerArr.map((content) => {
+          return (
+            <div key={content.id} className="content">
+              {content.content}
+            </div>
+          );
+        })}
+      </div>
+    </Career>
+  );
+};
 
 export default CareerContent;
 

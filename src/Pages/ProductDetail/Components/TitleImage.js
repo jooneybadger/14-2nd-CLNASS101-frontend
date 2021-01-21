@@ -1,6 +1,6 @@
 import React, { Component, useState, useEffect } from "react";
 import styled from "styled-components";
-import { API_DETAIL, API_DETAILPAGE } from "../../../config";
+import { API_YJ_DETAIL } from "../../../config";
 import MainBottom from "./MainBottom";
 
 const TitleImage = () => {
@@ -8,15 +8,9 @@ const TitleImage = () => {
   const [subimage, setSubImage] = useState([]);
 
   useEffect(() => {
-    // fetch(API_DETAIL)
-    //   .then((res) => res.json())
-    //   .then((res) => setData(res.class));
-    fetch(API_DETAILPAGE)
+    fetch(API_YJ_DETAIL)
       .then((res) => res.json())
-      .then((res) => setData(res.CLASS));
-    fetch(API_DETAILPAGE)
-      .then((res) => res.json())
-      .then((res) => setSubImage(res.CLASS.subImages[0]));
+      .then((res) => setData(res.class));
   }, []);
 
   return (
@@ -27,10 +21,10 @@ const TitleImage = () => {
         </MainImageLeft>
         <MainImageRight>
           <MainTop>
-            <img src={subimage.imageUrl} alt="titleImage" />
+            <img src={data.mainImageRight} alt="titleImage" />
           </MainTop>
           <MainBottoms>
-            <MainBottom />
+            <MainBottom mainImageBottom={data.mainImageBottom} />
           </MainBottoms>
         </MainImageRight>
       </MainImages>

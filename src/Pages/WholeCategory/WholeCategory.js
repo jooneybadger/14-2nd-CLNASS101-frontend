@@ -1,7 +1,4 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-useless-constructor */
-/* eslint-disable no-dupe-class-members */
-import React, { Component } from "react";
+import React from "react";
 import styled, { css } from "styled-components";
 import Nav from "../../Components/Nav/Nav";
 import Footer from "../../Components/Footer/Footer";
@@ -9,37 +6,31 @@ import CreativeContent from "./Components/CreativeContent";
 import CareerContent from "./Components/CareerContent";
 import MoneyContent from "./Components/MoneyContent";
 
-class WholeCategory extends Component {
-  constructor() {
-    super();
-  }
-
-  handleBackButton = () => {
-    this.props.history.push(`/`);
+const WholeCategory = (props) => {
+  const handleBackButton = () => {
+    props.history.push("/");
   };
 
-  render() {
-    return (
-      <>
-        <Nav />
-        <WrapCategory>
-          <WrapContents>
-            <Header>
-              <i onClick={this.handleBackButton} class="fa fa-arrow-left" />
-              <h1>전체 카테고리</h1>
-            </Header>
-            <Categories>
-              <CreativeContent />
-              <CareerContent />
-              <MoneyContent />
-            </Categories>
-          </WrapContents>
-        </WrapCategory>
-        <Footer />
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <Nav />
+      <WrapCategory>
+        <WrapContents>
+          <Header>
+            <i onClick={handleBackButton} class="fa fa-arrow-left" />
+            <h1>전체 카테고리</h1>
+          </Header>
+          <Categories>
+            <CreativeContent />
+            <CareerContent />
+            <MoneyContent />
+          </Categories>
+        </WrapContents>
+      </WrapCategory>
+      <Footer />
+    </>
+  );
+};
 
 export default WholeCategory;
 

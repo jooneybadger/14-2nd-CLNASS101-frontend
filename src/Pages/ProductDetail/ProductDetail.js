@@ -10,15 +10,17 @@ import Curriculum from "./Components/Curriculum";
 import OrderPage from "./Components/OrderPage";
 import KitIntroduce from "./Components/KitIntroduce";
 import Community from "./Components/Community";
-import { API_DETAILPAGE } from "../../config";
+import { API_DETAILPAGE, API_YJ_DETAIL } from "../../config";
 
 const ProductDetail = (props) => {
   const [data, setData] = useState([]);
+
   useEffect(() => {
-    fetch(API_DETAILPAGE)
+    fetch(API_YJ_DETAIL)
       .then((res) => res.json())
-      .then((res) => setData(res.CLASS));
+      .then((res) => setData(res));
   }, []);
+
   return (
     <>
       <Nav />

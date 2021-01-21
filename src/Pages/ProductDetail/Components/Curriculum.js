@@ -2,14 +2,14 @@
 import React, { Component, useState, useEffect, axios } from "react";
 import styled from "styled-components";
 import Substance from "./Substance";
-import { API_DETAILPAGE } from "../../../config";
+import { API_DETAILPAGE, API_YJ_DETAIL } from "../../../config";
 
 const Curriculum = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
-    fetch(API_DETAILPAGE)
+    fetch(API_YJ_DETAIL)
       .then((res) => res.json())
-      .then((res) => setData(res.CLASS));
+      .then((res) => setData(res.class.Curriculum));
   }, []);
 
   return (
@@ -22,7 +22,10 @@ const Curriculum = () => {
         <p>커리큘럼은 일부 변동될 수 있으며, 콘텐츠는 순차적으로 업로드 될 수 있습니다.</p>
       </Header>
       <Substances>
-        <Substance />
+        {data &&
+          data.map((data, idx) => {
+            return <Substance key={idx} data={data} />;
+          })}
       </Substances>
     </WrapCurriculum>
   );

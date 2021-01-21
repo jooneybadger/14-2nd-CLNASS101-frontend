@@ -26,7 +26,6 @@ const Community = () => {
         <h1>
           <a name="community">커뮤니티</a>
         </h1>
-        <p>1개의 글</p>
         <Button onClick={goToPosting}>글 작성하기</Button>
       </Header>
       {modalSwitch ? (

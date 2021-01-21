@@ -1,67 +1,61 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
+import { API_List, API_YJ } from "../../../config";
 import styled from "styled-components";
-import { API_List } from "../../../config";
 import Bookmark from "./Bookmark";
 
-class UpdatedClassLists extends Component {
-  constructor() {
-    super();
-    this.state = {
-      UpdateClassLists: [],
-    };
-  }
+const UpdatedClassLists = () => {
+  const [updateLists, setUpdateLists] = useState([]);
 
-  componentDidMount() {
-    fetch(API_List)
+  useEffect(() => {
+    fetch(API_YJ)
       .then((res) => res.json())
-      .then((res) => this.setState({ UpdateClassLists: res.RESULT }));
-  }
-  render() {
-    const { UpdateClassLists } = this.state;
-    console.log(UpdateClassLists);
-    return (
-      <WrapLists>
-        <WrapHeader>
-          <header>전체 클래스</header>
-          <p>크리에이터가 최근 활동한 클래스예요.</p>
-        </WrapHeader>
-        <WrapList>
-          {UpdateClassLists.map((list) => {
-            return (
-              <ListInfo key={list.id}>
-                <ProductImages>
-                  <img className="mainImage" src={list.thumbnail} alt="mainImage" />
-                  <Bookmark />
-                </ProductImages>
-                <Intro>
-                  <div className="category">{list.subCategory}</div>
-                  <div className="title">{list.title}</div>
-                  <div className="likes">
-                    <i class="fa fa-heart"></i>
-                    <span className="likesNum">{list.likeCount}</span>
-                    <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                    <span className="likesPer">{list.sale * 100}%</span>
-                  </div>
-                </Intro>
-                <Discount>
-                  <span className="originalPrice">{list.price}원</span>
-                  <span className="discountPer">{list.sale * 100}%</span>
-                </Discount>
-                <Price>
-                  <span className="monthlyPay">{list.finalPrice}원</span>
-                </Price>
-                <Commonstates>
-                  <span className="comment">미션 답변 작성</span>
-                  <span className="commentTime">{list.id}분전</span>
-                </Commonstates>
-              </ListInfo>
-            );
-          })}
-        </WrapList>
-      </WrapLists>
-    );
-  }
-}
+      .then((res) => setUpdateLists(res.UpdatedLists));
+  }, []);
+
+  return (
+    <WrapLists>
+      <WrapHeader>
+        <header>전체 클래스</header>
+        <p>크리에이터가 최근 활동한 클래스예요.</p>
+      </WrapHeader>
+      <WrapList>
+        {updateLists.map((list) => {
+          return (
+            <ListInfo key={list.id}>
+              <ProductImages>
+                <img className="mainImage" src={list.imageUrl} alt="mainImage" />
+                <Bookmark />
+              </ProductImages>
+              <Intro>
+                <div className="category">
+                  {list.category}•{list.creator}
+                </div>
+                <div className="title">{list.title}</div>
+                <div className="likes">
+                  <i class="fa fa-heart"></i>
+                  <span className="likesNum">{list.likes}</span>
+                  <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                  <span className="likesPer">{list.likesPer}%</span>
+                </div>
+              </Intro>
+              <Discount>
+                <span className="originalPrice">{list.Price}원</span>
+                <span className="discountPer">{list.discountPer}%</span>
+              </Discount>
+              <Price>
+                <span className="monthlyPay">{}원</span>
+              </Price>
+              <Commonstates>
+                <span className="comment">미션 답변 작성</span>
+                <span className="commentTime">{list.id}분전</span>
+              </Commonstates>
+            </ListInfo>
+          );
+        })}
+      </WrapList>
+    </WrapLists>
+  );
+};
 
 export default UpdatedClassLists;
 

@@ -1,54 +1,46 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-useless-constructor */
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import { API_YJ } from "../../../config";
 
-class MainNav extends Component {
-  constructor() {
-    super();
-    this.state = {
-      NavContents: [],
-    };
-  }
+const MainNav = (props) => {
+  const [NavContents, setNavContents] = useState([]);
 
-  componentDidMount() {
-    fetch(API_YJ)
+  useEffect(() => {
+    fetch(API_YJ, {
+      method: "GET",
+    })
       .then((res) => res.json())
-      .then((res) => this.setState({ NavContents: res.NavContents }));
-  }
+      .then((res) => setNavContents(res.NavContents));
+  }, []);
 
-  goToCategory = () => {
-    this.props.history.push("/WholeCategory");
+  const goToCategory = () => {
+    props.history.push("/WholeCategory");
   };
 
-  render() {
-    const { NavContents } = this.state;
-    return (
-      <WrapMainNav>
-        <NavContent>
-          <img
-            onClick={() => this.goToCategory()}
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/1200px-Hamburger_icon.svg.png"
-            alt="menu tab"
-          />
-        </NavContent>
-        {NavContents.length > 0 &&
-          NavContents.map((navContent) => {
-            return (
-              <Link to="" className="navTexts" key={navContent.id}>
-                <div key={navContent.id} className="navContents">
-                  {navContent.content}
-                </div>
-              </Link>
-            );
-          })}
-      </WrapMainNav>
-    );
-  }
-}
+  return (
+    <WrapMainNav>
+      <NavContent>
+        <img
+          onClick={() => goToCategory()}
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/1200px-Hamburger_icon.svg.png"
+          alt="menu tab"
+        />
+      </NavContent>
+      {NavContents.length > 0 &&
+        NavContents.map((navContent) => {
+          return (
+            <Link to="" className="navTexts" key={navContent.id}>
+              <div key={navContent.id} className="navContents">
+                {navContent.content}
+              </div>
+            </Link>
+          );
+        })}
+    </WrapMainNav>
+  );
+};
 
 export default withRouter(MainNav);
 

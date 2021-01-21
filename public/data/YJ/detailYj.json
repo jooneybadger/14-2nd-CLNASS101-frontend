@@ -12,7 +12,7 @@
         "imageUrl": "https://i.pinimg.com/564x/b3/0c/e8/b30ce8d01f45ec1352efc3ebe71b5460.jpg"
       }
     ],
-   "Curriculum":[
+    "Curriculum":[
       {
         "id":0,
         "imageUrl": "https://cdn.class101.net/images/12695d25-8bac-41e8-9f53-e6a3966e84e2/2880xauto.webp",
@@ -140,6 +140,15 @@
     "Community": {
       "Slider": {},
       "Comment": []
+    },
+    "OrderPage": {
+      "subCategoryName":"미술",
+      "title": "누구나 배울 수 있는 감성 아크릴화 클래스",
+      "isTakeClass": "1월 28일까지",
+      "sale": 28,
+      "price": 300000,
+      "difficulty": "난이도 : 중",
+      "likeCount": 2319
     }
   }
 }

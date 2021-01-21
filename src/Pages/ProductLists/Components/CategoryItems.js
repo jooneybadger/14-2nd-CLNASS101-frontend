@@ -1,37 +1,29 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { API_YJ } from "../../../config";
 import styled from "styled-components";
 
-class CategoryItems extends Component {
-  constructor() {
-    super();
-    this.state = {
-      categoryItems: [],
-    };
-  }
+const CategoryItems = () => {
+  const [categoryItems, setCategoryItems] = useState([]);
 
-  componentDidMount() {
+  useEffect(() => {
     fetch(API_YJ)
       .then((res) => res.json())
-      .then((res) => this.setState({ categoryItems: res.CategoryItems }));
-  }
+      .then((res) => setCategoryItems(res.CategoryItems));
+  }, []);
 
-  render() {
-    const { categoryItems } = this.state;
-    return (
-      <WrapCategory>
-        {categoryItems.length > 0 &&
-          categoryItems.map((item) => {
-            return (
-              <div key={item.id} className="categoryItems">
-                {item.CategoryItem}
-              </div>
-            );
-          })}
-      </WrapCategory>
-    );
-  }
-}
+  return (
+    <WrapCategory>
+      {categoryItems.length > 0 &&
+        categoryItems.map((item) => {
+          return (
+            <div key={item.id} className="categoryItems">
+              {item.CategoryItem}
+            </div>
+          );
+        })}
+    </WrapCategory>
+  );
+};
 
 export default CategoryItems;
 

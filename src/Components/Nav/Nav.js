@@ -1,17 +1,25 @@
 import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 
 const Nav = (props) => {
   const { Kakao } = window;
+  const history = useHistory();
   const [myProfileURL, setMyProfileURL] = useState("");
   const [myProfileName, setMyProfileName] = useState("");
   const [handleModalSwitch, setHandleModalSwitch] = useState(false);
   const [loginStatueSwitch, setLoginStatueSwitch] = useState(false);
 
   useEffect(() => {
-    // setMyProfileURL(props.history.location.state.profileImage);
-    // setMyProfileName(props.history.location.state.name);
+    fetch("/data/SH/myProfile.json", {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        setMyProfileURL(res.result.url);
+        setMyProfileName(res.result.name);
+      });
+
     setLoginStatueSwitch(!loginStatueSwitch);
   }, []);
 
@@ -22,12 +30,16 @@ const Nav = (props) => {
     }
   }
 
+  const goToMain = () => {
+    history.push("/");
+  };
+
   return (
     <Navigation>
       <NavContainer>
         <NavLeftBox>
           <LogoBox>
-            <img src="/images/SH/logo_text.png" alt="logo" />
+            <img onClick={goToMain} src="/images/SH/logo_text.png" alt="logo" />
           </LogoBox>
           <SerchBox>
             <input type="text" placeholder="배우고 싶은 것이 있나요?" />
@@ -130,6 +142,10 @@ const LogoBox = styled.div`
 
   img {
     height: 100%;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 `;
 
@@ -224,6 +240,8 @@ const ProfileModalBox = styled.div`
   padding: 25px;
   border: 1px;
   box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.3);
+  z-index: 10000;
+  background-color: #fff;
 
   .miniProfileBox {
     display: flex;

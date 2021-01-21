@@ -1,43 +1,37 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { API_WC } from "../../../config";
 
-class MoneyContent extends Component {
-  constructor() {
-    super();
-    this.state = {
-      moneyArr: [],
-    };
-  }
+const MoneyContent = () => {
+  const [moneyArr, setMoneyArr] = useState([]);
 
-  componentDidMount() {
-    fetch(API_WC)
+  useEffect(() => {
+    fetch(API_WC, {
+      method: "GET",
+    })
       .then((res) => res.json())
-      .then((res) => this.setState({ moneyArr: res.MoneyContent }));
-  }
+      .then((res) => setMoneyArr(res.MoneyContent));
+  }, []);
 
-  render() {
-    const { moneyArr } = this.state;
-    return (
-      <Money>
-        <div className="wrapSubHeader">
-          <h2>머니</h2>
-          <i class="fa fa-caret-right" />
-        </div>
-        <div className="contents">
-          {moneyArr[0] &&
-            moneyArr.map((content) => {
-              return (
-                <div key={content.id} className="content">
-                  {content.content}
-                </div>
-              );
-            })}
-        </div>
-      </Money>
-    );
-  }
-}
+  return (
+    <Money>
+      <div className="wrapSubHeader">
+        <h2>머니</h2>
+        <i class="fa fa-caret-right" />
+      </div>
+      <div className="contents">
+        {moneyArr[0] &&
+          moneyArr.map((content) => {
+            return (
+              <div key={content.id} className="content">
+                {content.content}
+              </div>
+            );
+          })}
+      </div>
+    </Money>
+  );
+};
 
 export default MoneyContent;
 

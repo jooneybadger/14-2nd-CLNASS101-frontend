@@ -1,69 +1,50 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { API_DETAILPAGE } from "../../../config";
+import { API_YJ_DETAIL } from "../../../config";
 
-const Substance = () => {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    fetch(API_DETAILPAGE)
-      .then((res) => res.json())
-      .then((res) => setData(res.CLASS.curriculum));
-  }, []);
-
+const Substance = ({ data }) => {
   return (
-    <WrapSubstance>
-      {data.map((data) => {
-        return (
-          <>
-            <div key={data.order} className="wrapper">
-              <div className="substanceImage">
-                <img src={data.thumbnailImage} alt="curriculumImage" />
-              </div>
-              <div className="text">
-                <h3>{data.chapterName}</h3>
-                <Explain>
-                  {data.chapterDetail.map((el) => {
-                    return (
-                      <WrapExplain>
-                        <Number>{el.lectureNum}</Number>
-                        <Content>{el.lectureTitle}</Content>
-                      </WrapExplain>
-                    );
-                  })}
-                </Explain>
-              </div>
-            </div>
-          </>
-        );
-      })}
-    </WrapSubstance>
+    <>
+      <Wrapper>
+        <SubstanceImage>
+          <img src={data.imageUrl} alt="curriculumImage" />
+        </SubstanceImage>
+        <Text>
+          <h3>{data.title}</h3>
+          <Explain>
+            <WrapExplain>
+              <Number>{data && data.number}</Number>
+              <Content>{data && data.content}</Content>
+            </WrapExplain>
+          </Explain>
+        </Text>
+      </Wrapper>
+    </>
   );
 };
 
 export default Substance;
 
-const WrapSubstance = styled.div`
-  .wrapper {
-    display: flex;
-    margin-top: 24px;
-    padding-top: 24px;
-    .substanceImage {
-      margin-right: 25px;
-      img {
-        width: 220px;
-        height: 123.75px;
-      }
-    }
+const Wrapper = styled.div`
+  display: flex;
+  margin-top: 24px;
+  padding-top: 24px;
+`;
 
-    .text {
-      h3 {
-        font-size: 20px;
-        line-height: 28px;
-        color: rgb(133, 138, 141);
-        font-weight: normal;
-      }
-    }
+const SubstanceImage = styled.div`
+  margin-right: 25px;
+  img {
+    width: 220px;
+    height: 123.75px;
+  }
+`;
+
+const Text = styled.div`
+  h3 {
+    font-size: 20px;
+    line-height: 28px;
+    color: rgb(133, 138, 141);
+    font-weight: normal;
   }
 `;
 
