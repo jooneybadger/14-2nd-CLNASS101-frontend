@@ -1,12 +1,8 @@
 # Team Name: CLNASS101
 
 [![Watch the video](https://img.youtube.com/vi/qU5auE2DBgo/maxresdefault.jpg
-)](https://youtu.be/qU5auE2DBgo)
-클릭해서 영상으로 이동(크리에이터 부분)
-
-[![Watch the video](https://img.youtube.com/vi/qU5auE2DBgo/maxresdefault.jpg
 )](https://www.youtube.com/watch?v=USxipPhALqk)
-클릭해서 영상으로 이동(크리에이터 부분)
+클릭해서 영상으로 이동(Main Page && Detail Page)
 
 # Introduction
 > 클래스101 웹사이트를 클론해보자.
