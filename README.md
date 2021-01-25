@@ -64,6 +64,8 @@ Back-end <a href='https://github.com/wecode-bootcamp-korea/14-2nd-CLNASS101-back
  - [x] Function : 각 클래스 마다 하트를 누를시, 좋아요 갯수 변경되게 구현
  - [x] Function : 동적 routing 이용하여 페이지 클릭시 고유한 디테일 페이지로 이동
 
+ <img src="/images/YJ/Class Main.gif">
+
 #### DetailPage
  - [x] Function : subNav 항목 클릭시, 선택하는 곳으로 이동하도록 구현
  - [x] Function : 하트를 누를시, 좋아요 갯수 변경되게 구현
